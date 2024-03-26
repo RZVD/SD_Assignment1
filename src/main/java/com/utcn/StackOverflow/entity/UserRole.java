@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userType")
 public abstract class UserRole {
     public UserRole(User user) {
         this.user = user;

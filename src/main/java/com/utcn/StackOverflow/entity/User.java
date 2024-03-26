@@ -12,6 +12,41 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Set<Post> getVotedPosts() {
+        return votedPosts;
+    }
+
+    public void setVotedPosts(Set<Post> votedPosts) {
+        this.votedPosts = votedPosts;
+    }
+
+    public byte[] getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPassword(String password) {
+        try {
+            this.passwordHash = MessageDigest.getInstance("SHA-256").digest(password.getBytes());
+        } catch (NoSuchAlgorithmException ignored) {
+        }
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public User(String username, String password, Set<UserRole> roleSet) {
         this.username = username;
         this.roles = roleSet;

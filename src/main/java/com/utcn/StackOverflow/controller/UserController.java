@@ -1,6 +1,9 @@
 package com.utcn.StackOverflow.controller;
 
 import com.google.gson.Gson;
+import com.utcn.StackOverflow.DTOs.post.CreateQuestionDTO;
+import com.utcn.StackOverflow.DTOs.users.UpdateUserDTO;
+import com.utcn.StackOverflow.DTOs.users.UserDTO;
 import com.utcn.StackOverflow.entity.*;
 import com.utcn.StackOverflow.service.UserRoleService;
 import com.utcn.StackOverflow.service.UserService;
@@ -40,49 +43,23 @@ public class UserController {
     }
 
 
-    @GetMapping("/saveRZVD")
-    public boolean saveRZVD(){
-        UserRole m = new Moderator();
-        Set<UserRole> ur = new HashSet<>();
+    @PostMapping("/saveUser")
+    public String saveUser(@RequestBody UserDTO userDTO){
+        return userService
+                .insertUser(userDTO)
+                .toString();
+    }
 
-        ur.add(m);
-        User u = new User("RZVD", "abc", ur);
+    @PutMapping("/updateUser")
+    public String updateUser(@RequestBody UpdateUserDTO updateUserDTO){
+        return userService
+                .updateUser(updateUserDTO)
+                .toString();
 
-        m.setUser(u);
-        this.userService.insertUser(u);
-        this.userRoleService.save(m);
-        return true;
     }
     @ResponseBody
-    @PutMapping("/saveUser")
-    public String saveUser(HttpServletRequest request, HttpServletResponse response){
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        User u = new User(username, password);
-        u.setRoles(Arrays.stream(request.getParameter("roles").split(",")).
-                map(role -> UserRoleFactory.createUserRole(UserType.valueOf(role)).setUser(u))
-                .collect(Collectors.toSet()));
-
-        this.userService.insertUser(u);
-        return String.format("%s %s %s", username, password, u.getRoles());
-    }
-    @ResponseBody
-    @GetMapping("/deleteUser/{id}")
-    public Boolean deleteUserById(@PathVariable Long id) {
+    @DeleteMapping("/deleteUser")
+    public Boolean deleteUserById(@RequestParam Long id) {
         return userService.deleteById(id);
-    }
-
-    @ResponseBody
-    @GetMapping("/ask/{id}")
-    public Boolean askQuestion(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
-       String title = request.getParameter("title");
-       String text  = request.getParameter("text");
-
-       Set<Tag> tags = Arrays.stream(request.getParameter("tags").split(","))
-               .map(String::toUpperCase)
-               .map(Tag::new)
-               .collect(Collectors.toSet());
-
-       return userService.askQuestion(id, title, text, tags);
     }
 }

@@ -12,7 +12,7 @@ public class Question extends Post{
 
     @OneToMany
     @JoinColumn(name = "question_post_id")
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
     public Question(User author, String title, String body, String picture_path, Set<Tag> tags) {
         super(author, body, picture_path);
