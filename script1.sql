@@ -1,3 +1,126 @@
+create sequence posts_seq
+    increment by 50;
+
+alter sequence posts_seq owner to souser;
+
+create sequence userroles_seq
+    increment by 50;
+
+alter sequence userroles_seq owner to souser;
+
+create sequence user_role_seq
+    increment by 50;
+
+alter sequence user_role_seq owner to souser;
+
+create sequence tags_seq
+    increment by 50;
+
+alter sequence tags_seq owner to souser;
+
+create table if not exists tags
+(
+    tag_id varchar(255) not null
+        primary key
+);
+
+alter table tags
+    owner to souser;
+
+create table if not exists users
+(
+    user_id       bigserial
+        primary key,
+    password_hash bytea,
+    username      varchar(255)
+);
+
+alter table users
+    owner to souser;
+
+create table if not exists posts
+(
+    post_id      bigserial
+        primary key,
+    body         varchar(255),
+    picture_path varchar(255),
+    score        bigint,
+    timestamp    timestamp(6),
+    user_id      bigint
+        constraint fk5lidm6cqbc7u4xhqpxm898qme
+            references users
+);
+
+alter table posts
+    owner to souser;
+
+create table if not exists questions
+(
+    title   varchar(255),
+    post_id bigint not null
+        primary key
+        constraint fk5ydwuc30mybooagc4xmefsrbf
+            references posts
+);
+
+alter table questions
+    owner to souser;
+
+create table if not exists answers
+(
+    post_id          bigint not null
+        primary key
+        constraint fkkauv4227pra49oqimpje394i5
+            references posts,
+    question_post_id bigint
+        constraint fkjlrfan5kw92x1o6thfj64idr0
+            references questions
+);
+
+alter table answers
+    owner to souser;
+
+create table if not exists question_tags
+(
+    post_id bigint       not null
+        constraint fk3tyds6poinkj1avs64h21nga0
+            references questions,
+    tag_id  varchar(255) not null
+        constraint fk4s4qdqgvc98lx55s3hu9vqam7
+            references tags,
+    primary key (post_id, tag_id)
+);
+
+alter table question_tags
+    owner to souser;
+
+create table if not exists user_votes
+(
+    user_id bigint not null
+        constraint fk7sg00sr5h4395xrgufxvsmagv
+            references users,
+    post_id bigint not null
+        constraint fkqgxir29voaphhtxcw6fu6lm6s
+            references posts,
+    primary key (user_id, post_id)
+);
+
+alter table user_votes
+    owner to souser;
+
+create table if not exists user_role
+(
+    dtype        varchar(31) not null,
+    user_role_id bigint      not null
+        primary key,
+    user_id      bigint
+        constraint fkj345gk1bovqvfame88rcx7yyx
+            references users
+);
+
+alter table user_role
+    owner to souser;
+
 
 create sequence posts_seq
     increment by 50;
