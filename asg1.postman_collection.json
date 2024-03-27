@@ -1,0 +1,260 @@
+{
+	"info": {
+		"_postman_id": "db487013-57f0-4e98-91c3-f70f56306d0b",
+		"name": "asg1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33817382"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/users/getAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":1,\n    \"questionId\":3,\n    \"text\": \"And this is a better way\",\n    \"picturePath\": \"/path/to/blurry/pic\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/posts/ask",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 1,\n    \"title\": \"How to deploy spring boot app to kubernetes\",\n    \"text\": \"Same as above\",\n    \"picturePath\": \"/mnt/some/picture\",\n    \"tags\": [\"Java\", \"Spring\", \"Devops\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/posts/ask",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"posts",
+						"ask"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/posts/delete?id=1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/posts/delete?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"posts",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/posts/getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/posts/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"posts",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/get?id=1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/get?id=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"get"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/posts/getAllQuestions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/posts/getAllQuestions",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"posts",
+						"getAllQuestions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/saveUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"AwesomeUsername\",\n    \"password\": \"totally_insecure\",\n    \"roles\": [\"REGULAR\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/saveUser",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"saveUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/posts/update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\":2,\n    \"postId\":2,\n    \"title\":\"\",\n    \"text\":\"This is how you do it + an update\",\n    \"picturePath\": \"/path/to/blurry/pic\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/posts/update",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"posts",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/updateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 2,\n    \"username\": \"AwesomeUsername1\",\n    \"password\": \"\",\n    \"roles\": [\"REGULAR\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/updateUser",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"updateUser"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
