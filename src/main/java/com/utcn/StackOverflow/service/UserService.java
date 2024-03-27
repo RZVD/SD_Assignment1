@@ -55,18 +55,26 @@ public class UserService {
 
     public User updateUser(UpdateUserDTO updateUserDTO){
         User user = userRepository.findById(updateUserDTO.getId()).get();
+        System.out.println(user);
 
         user.setUsername(
             updateUserDTO.getUsername()
         );
-        user.setPassword(updateUserDTO.getPassword());
+        if (!updateUserDTO.getPassword().isEmpty()){
+            user.setPassword(updateUserDTO.getPassword());
+        }
 
         Set<UserRole> userRoles = updateUserDTO.getRoles().stream()
-                .map(role -> UserRoleFactory.createUserRole(UserType.valueOf(role)).setUser(user))
+                .map(role -> UserRoleFactory.createUserRole(UserType.valueOf(role), user))
                 .collect(Collectors.toSet());
+
         user.setRoles(userRoles);
+        this.userRoleRepository.saveAll(userRoles);
         this.userRepository.save(user);
-        this.userRoleRepository.saveAll(user.getRoles());
+
+//        for (var ur : user.getRoles()){
+//            ur.setUser(user);
+//        }
 
         return user;
     }

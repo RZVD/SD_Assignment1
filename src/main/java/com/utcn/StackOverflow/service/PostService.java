@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -89,7 +90,7 @@ public class PostService {
         if (maybePost.isEmpty() || maybeUser.isEmpty()) return false;
         Post post = maybePost.get();
         User user = maybeUser.get();
-
+        if(!Objects.equals(post.getAuthor().getUserId(), user.getUserId())) return false;
         post.setBody(updatePostDTO.getText());
         post.setPicturePath(updatePostDTO.getPicturePath());
 

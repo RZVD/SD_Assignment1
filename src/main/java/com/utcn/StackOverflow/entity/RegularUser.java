@@ -9,6 +9,10 @@ public class RegularUser extends UserRole{
         return "REGULAR";
     }
 
+    public RegularUser(User user) {
+        super(user);
+    }
+
     public RegularUser() {
         super();
     }

@@ -24,8 +24,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRoleService userRoleService;
-    private final Gson gson = new Gson();
-
     @ResponseBody
     @GetMapping("/getAll")
 
@@ -34,14 +32,13 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/get/{id}")
-    public String getUserByID(@PathVariable Long id){
+    @GetMapping("/get")
+    public String getUserByID(@RequestParam Long id){
         return userService
                 .getUser(id)
                 .map(User::toString)
                 .orElse("{}");
     }
-
 
     @PostMapping("/saveUser")
     public String saveUser(@RequestBody UserDTO userDTO){
@@ -55,7 +52,6 @@ public class UserController {
         return userService
                 .updateUser(updateUserDTO)
                 .toString();
-
     }
     @ResponseBody
     @DeleteMapping("/deleteUser")

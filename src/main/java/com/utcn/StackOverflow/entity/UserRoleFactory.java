@@ -7,4 +7,11 @@ public class UserRoleFactory {
             case MODERATOR -> new Moderator();
         };
     }
+
+    public static UserRole createUserRole(UserType userType, User user) {
+        return switch (userType) {
+            case REGULAR -> new RegularUser(user);
+            case MODERATOR -> new Moderator(user);
+        };
+    }
 }

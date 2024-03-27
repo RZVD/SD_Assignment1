@@ -5,6 +5,10 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Moderator extends UserRole {
+    public Moderator(User user) {
+        super(user);
+    }
+
     public Moderator() {
         super();
     }

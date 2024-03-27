@@ -48,7 +48,7 @@ public class PostController {
 
     @ResponseBody
     @PutMapping("/update")
-    public Boolean updatePost(@RequestParam Long postId, @RequestBody UpdatePostDTO updatePostDTO){
+    public Boolean updatePost(@RequestBody UpdatePostDTO updatePostDTO){
         return postService.updatePost(updatePostDTO);
     }
 
@@ -58,16 +58,9 @@ public class PostController {
         return postService.answerQuestion(createAnswerDTO);
     }
 
-
     @ResponseBody
     @PostMapping("/ask")
     public Boolean askQuestion(@RequestBody CreateQuestionDTO createQuestionDTO) {
-        System.out.println(createQuestionDTO.getTags());
-        Set<Tag> tags = createQuestionDTO.getTags().stream()
-                .map(String::toUpperCase)
-                .map(Tag::new)
-                .collect(Collectors.toSet());
-
         return userService.askQuestion(createQuestionDTO);
     }
 
