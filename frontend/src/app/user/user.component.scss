@@ -1,0 +1,40 @@
+.wrapper {
+    margin: 50px;
+    padding:50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        padding-bottom: 20px;
+    }
+}
+
+
+mat-card {
+    display: flex;
+
+    
+    mat-card-title{
+        padding:20px;
+        margin-top: 20px;
+        justify-content: center;
+        align-items: center ;
+        display: flex;
+    }
+
+    mat-card-subtitle {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center ;
+        
+        .role {
+            margin: 8px;
+            padding: 5px;
+            background-color: lightblue;
+            border-radius: 8px;
+        }
+    }
+}

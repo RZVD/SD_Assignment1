@@ -1,0 +1,15 @@
+<div *ngIf="user; else noUser" class="wrapper">
+    <img src="assets/default.jpg" width="256" height="256" >
+    <mat-card>
+        <mat-card-title> {{ user.username }} </mat-card-title>
+    <mat-card-subtitle> 
+        <div *ngFor="let role of user.roles" class="role">
+            {{ role }}
+        </div>    
+    </mat-card-subtitle>
+</mat-card>
+</div>
+
+<ng-template #noUser>
+    <p>User Not found</p>
+</ng-template>

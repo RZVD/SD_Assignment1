@@ -1,0 +1,9 @@
+<div class="questions-wrapper">
+  <mat-card *ngFor="let user of mockUsers">
+    <mat-card-content>
+        <div class="profile-card__info"></div>
+        {{ user.username }}
+        {{ user.password }}
+    </mat-card-content>
+  </mat-card>
+</div>

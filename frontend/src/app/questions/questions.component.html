@@ -1,0 +1,39 @@
+<mat-card *ngFor="let question of questions" class="mx-4 my-4">
+
+    <div class="score">
+      <button mat-icon-button (click)="upvotePost(question)">
+        +
+      </button>
+      <span>{{ question.score }}</span>
+      <button mat-icon-button (click)="downvotePost(question)">
+        <div>-</div>
+      </button>
+    </div>
+    <div class="wrapper"> 
+        <mat-card-title class="question-card-title">{{ question.title }}</mat-card-title>
+        <mat-card-subtitle class="question-card-subtitle">
+            <div *ngFor="let tag of question.tags; let last = last" class="tag">
+                <a href="#">{{ tag }}</a>
+            </div>
+        </mat-card-subtitle>
+        <mat-card-content class="question-card-content">{{ question.text }}</mat-card-content>
+        <div class="question-footer">
+        </div>
+        <div *ngFor="let answer of question.answers" class="answer">
+            <p>{{ answer.text }}</p>
+            <div class="answer-footer">
+                <small>Answered on: {{ answer.date }}</small>
+                <small><a href="/user/{{answer.author}}">{{ answer.author }}</a></small>
+                <div class="score">
+                    <button mat-icon-button (click)="upvotePost(answer)">
+                        <div>+</div>
+                    </button>
+                    <span>{{ answer.score }}</span>
+                    <button mat-icon-button (click)="downvotePost(answer)">
+                        <div>-</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>

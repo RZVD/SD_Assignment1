@@ -1,0 +1,15 @@
+.profile-card {
+  margin: 4rem;
+
+
+  &__info {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}
+
+.questions-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+}
