@@ -1,6 +1,5 @@
 package com.utcn.StackOverflow.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 @Entity

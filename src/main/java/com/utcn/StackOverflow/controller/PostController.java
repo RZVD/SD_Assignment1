@@ -1,19 +1,19 @@
 package com.utcn.StackOverflow.controller;
 
-import com.utcn.StackOverflow.DTOs.post.CreateAnswerDTO;
-import com.utcn.StackOverflow.DTOs.post.CreateQuestionDTO;
-import com.utcn.StackOverflow.DTOs.post.UpdatePostDTO;
-import com.utcn.StackOverflow.entity.*;
+import com.utcn.StackOverflow.DTOs.post.*;
+import com.utcn.StackOverflow.entity.Question;
 import com.utcn.StackOverflow.service.PostService;
 import com.utcn.StackOverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.net.http.HttpResponse;
+import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/posts")
 public class PostController {
     @Autowired
@@ -24,8 +24,10 @@ public class PostController {
 
     @ResponseBody
     @GetMapping("/getAllQuestions")
-    public String getQuestions() {
-        return "{\"questions\":" + postService.getAllQuestionsSortedDescendingly().toString() + "}";
+    public ResponseEntity<String> getQuestions() {
+        return ResponseEntity.ok("{\"questions\":" + postService.getAllQuestionsSortedDescendingly().toString() + "}");
+//        return "{\"questions\":" + postService.getAllQuestionsSortedDescendingly().toString() + "}";
+//        return postService.getAllQuestionsSortedDescendingly();
     }
 
     @ResponseBody
@@ -64,4 +66,27 @@ public class PostController {
         return userService.askQuestion(createQuestionDTO);
     }
 
+    @ResponseBody
+    @PostMapping("/getByTags")
+    public String getByTags(@RequestBody GetByTagsDTO getByTagsDTO) {
+        return postService.getQuestionsByTags(getByTagsDTO).toString();
+    }
+
+    @ResponseBody
+    @PostMapping("/search")
+    public String searchQuestion(@RequestParam String query) {
+        return postService.searchQuestions(query).toString();
+    }
+
+    @ResponseBody
+    @GetMapping("/getAskedBy")
+    public String getAskedBy(@RequestParam Long author) {
+        return postService.getAskedBy(author).toString();
+
+    }
+    @ResponseBody
+    @PostMapping("/vote")
+    public String vote(@RequestBody VoteDTO voteDTO) {
+        return "{\"status\":" + postService.votePost(voteDTO)+ "}";
+    }
 }

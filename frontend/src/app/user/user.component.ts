@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { NgFor, NgIf} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
+import {NgFor, NgIf} from '@angular/common';
 
 @Component({
     standalone: true,
@@ -13,7 +13,7 @@ import { NgFor, NgIf} from '@angular/common';
 export class UserComponent implements OnInit{
     public userId: any;
     public user: any;
-  
+
 
     mockUsers = [
         {

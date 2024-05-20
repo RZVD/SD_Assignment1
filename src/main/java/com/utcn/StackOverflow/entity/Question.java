@@ -51,9 +51,12 @@ public class Question extends Post{
     public String toString() {
         return "{" +
             "\"title\":"  + "\"" + this.title     + "\"," +
+            "\"score\":"  + "\"" + this.getScore()     + "\"," +
+            "\"userScore\":"  + "\"" + this.getAuthor().getScore()     + "\"," +
+            "\"author\":"  + "\"" + this.getAuthor().getUsername()     + "\"," +
             "\"id\":"     + "\"" + this.getId()   + "\"," +
             "\"text\":"   + "\"" + this.getBody() + "\"," +
-            "\"answers\":" + this.answers         + ","   +
+            "\"answers\":" + this.answers.stream().sorted(Comparator.comparingLong(Answer::getScore).reversed()).toList() + ","   +
             "\"date\":\"" + this.getTimestamp().toString() + "\"," +
             "\"tags\":"   +   this.getTags().toString()
         + "}";

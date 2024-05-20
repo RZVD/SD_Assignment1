@@ -2,6 +2,8 @@ package com.utcn.StackOverflow.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
@@ -12,6 +14,41 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+
+    Boolean banned;
+
+    @Setter
+    @Getter
+    private String phoneNumber;
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
+    }
+
+    private Float score;
+    public Float updateScore(Float points) {
+        this.score += points;
+        return this.score;
+    }
+    public Boolean isBanned() {
+        return this.banned;
+    }
+
+
+    public void ban() {
+        banned = true;
+    }
+    public void unban() {
+        banned = false;
+    }
+
+    @OneToMany(mappedBy = "user")
+    public Set<Vote> votes;
+
     public Long getUserId() {
         return userId;
     }
@@ -22,14 +59,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Set<Post> getVotedPosts() {
-        return votedPosts;
-    }
-
-    public void setVotedPosts(Set<Post> votedPosts) {
-        this.votedPosts = votedPosts;
     }
 
     public byte[] getPasswordHash() {
@@ -46,6 +75,7 @@ public class User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
 
     public User(String username, String password, Set<UserRole> roleSet) {
         this.username = username;
@@ -75,24 +105,29 @@ public class User {
         this.roles = roles;
     }
 
-    @ManyToMany
-    @JoinTable(name = "user_votes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private Set<Post> votedPosts;
-
     @Column(name = "password_hash")
     private byte[] passwordHash;
 
 
     public User(String username, String password) {
         this.username = username;
+        this.score = 0.0f;
+        this.banned = false;
         try {
             this.passwordHash = MessageDigest.getInstance("SHA-256").digest(password.getBytes());
-        } catch (NoSuchAlgorithmException ignored) {
-        }
+        } catch (NoSuchAlgorithmException ignored) {}
     }
 
     public Set<UserRole> getRoles() {
         return roles;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 
     @Override

@@ -1,23 +1,21 @@
 package com.utcn.StackOverflow.controller;
 
-import com.google.gson.Gson;
-import com.utcn.StackOverflow.DTOs.post.CreateQuestionDTO;
+import com.twilio.Twilio;
+import com.twilio.type.PhoneNumber;
+import com.utcn.StackOverflow.DTOs.users.BanUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UpdateUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UserDTO;
-import com.utcn.StackOverflow.entity.*;
+import com.utcn.StackOverflow.entity.User;
 import com.utcn.StackOverflow.service.UserRoleService;
 import com.utcn.StackOverflow.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.twilio.rest.api.v2010.account.Message;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/users")
 public class UserController {
     @Autowired
@@ -40,6 +38,15 @@ public class UserController {
                 .orElse("{}");
     }
 
+    @ResponseBody
+    @GetMapping("/getByUsername")
+    public String getUserByUsername(@RequestParam String username){
+        return userService
+                .getUserByUsername(username)
+                .map(User::toString)
+                .orElse("{}");
+    }
+
     @PostMapping("/saveUser")
     public String saveUser(@RequestBody UserDTO userDTO){
         return userService
@@ -57,5 +64,13 @@ public class UserController {
     @DeleteMapping("/deleteUser")
     public Boolean deleteUserById(@RequestParam Long id) {
         return userService.deleteById(id);
+    }
+
+
+    @ResponseBody
+    @PostMapping("/ban")
+    public Boolean banUser(@RequestBody BanUserDTO banUerDTO) {
+        return userService.banUser(banUerDTO);
+
     }
 }

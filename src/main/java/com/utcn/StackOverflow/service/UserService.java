@@ -1,15 +1,21 @@
 package com.utcn.StackOverflow.service;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.*;
+import com.twilio.type.PhoneNumber;
 import com.utcn.StackOverflow.DTOs.post.CreateQuestionDTO;
+import com.utcn.StackOverflow.DTOs.users.BanUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UpdateUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UserDTO;
 import com.utcn.StackOverflow.entity.*;
 import com.utcn.StackOverflow.repository.UserRepository;
 import com.utcn.StackOverflow.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,6 +34,13 @@ public class UserService {
     public List<User> getUsers() {
         return (List<User>) this.userRepository.findAll();
     }
+
+
+    private String TWILIO_AUTH = System.getenv("TWILIO_AUTH");
+    private String TWILIO_SID  = System.getenv("TWILIO_SID");
+    private String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
+
+
 
     public User insertUser(User user) {
         this.userRepository.save(user);
@@ -55,11 +68,9 @@ public class UserService {
 
     public User updateUser(UpdateUserDTO updateUserDTO){
         User user = userRepository.findById(updateUserDTO.getId()).get();
-        System.out.println(user);
 
-        user.setUsername(
-            updateUserDTO.getUsername()
-        );
+        user.setUsername(updateUserDTO.getUsername());
+
         if (!updateUserDTO.getPassword().isEmpty()){
             user.setPassword(updateUserDTO.getPassword());
         }
@@ -72,10 +83,6 @@ public class UserService {
         this.userRoleRepository.saveAll(userRoles);
         this.userRepository.save(user);
 
-//        for (var ur : user.getRoles()){
-//            ur.setUser(user);
-//        }
-
         return user;
     }
 
@@ -84,6 +91,7 @@ public class UserService {
         if (maybeUser.isEmpty()) return false;
         try {
             User user = maybeUser.get();
+            if(user.isBanned()) return false;
             for (UserRole userRole : user.getRoles()){
                 userRoleRepository.deleteById(userRole.getId());
             }
@@ -103,6 +111,7 @@ public class UserService {
         if (maybeUser.isEmpty()) return false;
         User user = maybeUser.get();
 
+        if(user.isBanned()) return false;
 
         Set<Tag> tags = createQuestionDTO.getTags().stream()
                 .map(String::toUpperCase)
@@ -121,6 +130,60 @@ public class UserService {
             tag.getQuestions().add(question);
         }
         postService.insertPost(question);
+        return true;
+    }
+
+    private void notifyUser(User user) {
+        Twilio.init(TWILIO_SID, TWILIO_AUTH);
+
+        Message message = Message.creator(
+            new PhoneNumber(user.getPhoneNumber()),
+            new PhoneNumber(TWILIO_PHONE_NUMBER),
+
+            "You have been banned from the forum"
+        ).create();
+    }
+
+
+    public Boolean banUser(BanUserDTO banUserDTO) {
+        Optional<User> maybeBanningUser = userRepository.findById(banUserDTO.getBanningUserId());
+        Optional<User> maybeBannedUser = userRepository.findById(banUserDTO.getBannedUserId());
+
+        if (maybeBanningUser.isEmpty() || maybeBannedUser.isEmpty()) return false;
+
+        User banningUser = maybeBanningUser.get();
+        User bannedUser = maybeBannedUser.get();
+
+
+        if ( banningUser.isBanned() || banningUser.getRoles().stream().noneMatch(role -> role instanceof Moderator)) {
+            return false;
+        }
+
+        bannedUser.ban();
+
+        notifyUser(bannedUser);
+        return true;
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return this.userRepository.getUserByUsername(username);
+    }
+
+    public Boolean unbanUser(BanUserDTO banUserDTO) {
+        Optional<User> maybeBanningUser = userRepository.findById(banUserDTO.getBanningUserId());
+        Optional<User> maybeBannedUser = userRepository.findById(banUserDTO.getBannedUserId());
+
+        if (maybeBanningUser.isEmpty() || maybeBannedUser.isEmpty()) return false;
+
+        User banningUser = maybeBanningUser.get();
+        User bannedUser = maybeBannedUser.get();
+
+        if (banningUser.getRoles().stream().noneMatch(role -> role instanceof Moderator)) {
+            return false;
+        }
+
+        bannedUser.unban();
+
         return true;
     }
 }

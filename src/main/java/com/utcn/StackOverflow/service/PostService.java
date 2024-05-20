@@ -1,18 +1,16 @@
 package com.utcn.StackOverflow.service;
 
 import com.utcn.StackOverflow.DTOs.post.CreateAnswerDTO;
+import com.utcn.StackOverflow.DTOs.post.GetByTagsDTO;
 import com.utcn.StackOverflow.DTOs.post.UpdatePostDTO;
-import com.utcn.StackOverflow.entity.Answer;
-import com.utcn.StackOverflow.entity.Post;
-import com.utcn.StackOverflow.entity.Question;
-import com.utcn.StackOverflow.entity.User;
+import com.utcn.StackOverflow.DTOs.post.VoteDTO;
+import com.utcn.StackOverflow.entity.*;
 import com.utcn.StackOverflow.repository.PostRepository;
 import com.utcn.StackOverflow.repository.TagRepository;
 import com.utcn.StackOverflow.repository.UserRepository;
+import com.utcn.StackOverflow.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +24,8 @@ public class PostService {
     private TagRepository tagRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private VoteRepository voteRepository;
 
     public List<Post> getPosts() {
         return (List<Post>) this.postRepository.findAll();
@@ -46,6 +46,7 @@ public class PostService {
     }
 
     public Boolean deleteById(Long id) {
+
         try {
             this.postRepository.deleteById(id);
             return true;
@@ -108,4 +109,59 @@ public class PostService {
     public List<Question> getAllQuestionsSortedDescendingly(){
         return this.postRepository.getAllQuestionsSortedDescendingly();
     }
+
+    public List<Question> getQuestionsByTags(GetByTagsDTO getByTagsDTO) {
+        return this.postRepository.getQuestionsByTags(getByTagsDTO.getTags());
+    }
+
+    public List<Question> searchQuestions(String query) {
+        return this.postRepository.searchQuestion(query);
+    }
+
+    public List<Question> getAskedBy(Long user_id) {
+        return this.postRepository.getAskedBy(user_id);
+    }
+
+    public Integer votePost(VoteDTO voteDTO) {
+        Optional<User> maybeUser = userRepository.findById(voteDTO.getUserId());
+        Optional<Post> maybePost = postRepository.findById(voteDTO.getPostId());
+        int voteWeight = voteDTO.getVoteWeight();
+        if (maybeUser.isEmpty() || maybePost.isEmpty()) return 0;
+
+        //System.out.println(voteWeight);
+        Post post = maybePost.get();
+        User user = maybeUser.get();
+
+        if(Objects.equals(post.getAuthor().getUserId(), user.getUserId())) return 0;
+
+
+        Optional<Vote> existingVote = voteRepository.findByUserIdAndPostId(user.getUserId(), post.getId());
+        if (existingVote.isPresent()) {
+            Vote vote = existingVote.get();
+            if (existingVote.get().getVoteWeight() == voteWeight){
+                return 0;
+            }
+//            vote.setVoteWeight(voteWeight);
+//            post.addVote(vote, true);
+//            user.getVotes().add(vote);
+//            this.postRepository.save(post);
+//            this.userRepository.save(user);
+//            this.voteRepository.save(vote);
+//            return voteWeight;
+            return 0;
+
+        }
+
+        Vote newVote = new Vote(post, user, voteWeight);
+        int r = post.addVote(newVote);
+
+        user.getVotes().add(newVote);
+        this.postRepository.save(post);
+        this.userRepository.save(user);
+        this.voteRepository.save(newVote);
+
+
+        return r;
+    }
+
 }

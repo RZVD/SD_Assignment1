@@ -1,7 +1,6 @@
 package com.utcn.StackOverflow.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -32,6 +31,11 @@ public class Answer extends Post{
     @Override
     public String toString() {
         return "{\"text\":" + "\"" + this.getBody() + "\"," +
+                "\"title\":"  + "\"" + this.getScore()    + "\"," +
+                "\"userScore\":"  + "\"" + this.getAuthor().getScore()     + "\"," +
+                "\"score\":"  + "\"" + this.getScore()     + "\"," +
+                "\"author\":"  + "\"" + this.getAuthor().getUsername()     + "\"," +
+                "\"id\":"  + "\"" + this.getId()    + "\"," +
                 "\"date\":\"" + this.getTimestamp().toString() + "\"}";
     }
 }

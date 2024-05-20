@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card'
-import { NgFor } from '@angular/common';
+import {Component} from '@angular/core';
+import {MatCardModule} from '@angular/material/card'
+import {NgFor} from '@angular/common';
 
 @Component({
     standalone: true,
