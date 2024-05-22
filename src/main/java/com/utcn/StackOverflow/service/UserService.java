@@ -9,6 +9,7 @@ import com.utcn.StackOverflow.DTOs.users.BanUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UpdateUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UserDTO;
 import com.utcn.StackOverflow.entity.*;
+import com.utcn.StackOverflow.repository.PostRepository;
 import com.utcn.StackOverflow.repository.UserRepository;
 import com.utcn.StackOverflow.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class UserService {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private PostRepository postRepository;
+
     public List<User> getUsers() {
         return (List<User>) this.userRepository.findAll();
     }
@@ -92,6 +96,10 @@ public class UserService {
         try {
             User user = maybeUser.get();
             if(user.isBanned()) return false;
+            postService.getAllPosts()
+                    .stream().filter(post -> post.getAuthor().getUserId().equals(id))
+                    .forEach(post -> postRepository.delete(post));
+
             for (UserRole userRole : user.getRoles()){
                 userRoleRepository.deleteById(userRole.getId());
             }

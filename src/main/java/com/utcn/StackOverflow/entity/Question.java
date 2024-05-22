@@ -54,6 +54,7 @@ public class Question extends Post{
             "\"score\":"  + "\"" + this.getScore()     + "\"," +
             "\"userScore\":"  + "\"" + this.getAuthor().getScore()     + "\"," +
             "\"author\":"  + "\"" + this.getAuthor().getUsername()     + "\"," +
+            "\"authorId\":"  + "\"" + this.getAuthor().getUserId()     + "\"," +
             "\"id\":"     + "\"" + this.getId()   + "\"," +
             "\"text\":"   + "\"" + this.getBody() + "\"," +
             "\"answers\":" + this.answers.stream().sorted(Comparator.comparingLong(Answer::getScore).reversed()).toList() + ","   +

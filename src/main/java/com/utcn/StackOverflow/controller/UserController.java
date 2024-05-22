@@ -5,13 +5,20 @@ import com.twilio.type.PhoneNumber;
 import com.utcn.StackOverflow.DTOs.users.BanUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UpdateUserDTO;
 import com.utcn.StackOverflow.DTOs.users.UserDTO;
+import com.utcn.StackOverflow.DTOs.users.LoginDTO;
 import com.utcn.StackOverflow.entity.User;
 import com.utcn.StackOverflow.service.UserRoleService;
 import com.utcn.StackOverflow.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.twilio.rest.api.v2010.account.Message;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Optional;
 
 
 @RestController
@@ -72,5 +79,22 @@ public class UserController {
     public Boolean banUser(@RequestBody BanUserDTO banUerDTO) {
         return userService.banUser(banUerDTO);
 
+    }
+
+    @ResponseBody
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        Optional<User> maybeUser = this.userService.getUserByUsername(loginDTO.getUsername());
+
+        if (maybeUser.isEmpty()) return new ResponseEntity("{\"status\":false}", HttpStatus.UNAUTHORIZED);
+        byte[] providedPasswordHash = {};
+        try {
+            providedPasswordHash = MessageDigest.getInstance("SHA-256").digest(loginDTO.getPassword().getBytes());
+        } catch (NoSuchAlgorithmException ignored) {
+        }
+        if(!Arrays.equals(maybeUser.get().getPasswordHash(), providedPasswordHash)) {
+            return new ResponseEntity("{\"status\":falsee}", HttpStatus.UNAUTHORIZED);
+        }
+        return ResponseEntity.ok("{\"userId\":" + maybeUser.get().getUserId() + "}");
     }
 }

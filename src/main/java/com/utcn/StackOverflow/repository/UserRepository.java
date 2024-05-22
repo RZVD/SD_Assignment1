@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query( value =
-        "SELECT * FROM users " +
-        "JOIN user_role ON users.user_id = user_role.user_id " +
-        "WHERE users.username = :username",
+        "SELECT u.* FROM users u " +
+        "JOIN user_role ur ON u.user_id = ur.user_id " +
+        "WHERE u.username = :username",
         nativeQuery = true
     )
     public Optional<User> getUserByUsername(@Param("username") String username);

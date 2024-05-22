@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 public class RegularUser extends UserRole{
     @Override
     public String toString() {
-        return "REGULAR";
+        return "\"REGULAR\"";
     }
 
     public RegularUser(User user) {

@@ -35,6 +35,7 @@ public class Answer extends Post{
                 "\"userScore\":"  + "\"" + this.getAuthor().getScore()     + "\"," +
                 "\"score\":"  + "\"" + this.getScore()     + "\"," +
                 "\"author\":"  + "\"" + this.getAuthor().getUsername()     + "\"," +
+                "\"authorId\":"  + "\"" + this.getAuthor().getUserId()     + "\"," +
                 "\"id\":"  + "\"" + this.getId()    + "\"," +
                 "\"date\":\"" + this.getTimestamp().toString() + "\"}";
     }

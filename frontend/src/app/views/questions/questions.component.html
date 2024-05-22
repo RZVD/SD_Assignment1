@@ -1,8 +1,25 @@
+<div *ngIf="this.userId != undefined && this.userId != null">
 <mat-form-field>
     <input matInput type="text" placeholder="Search" (keydown)="searchQuestions($event)">
 </mat-form-field>
-<input type="submit" adsf>
+
+<form (ngSubmit)="addQuestion()">
+    <mat-form-field>
+        <input matInput type="text" placeholder="question title" [(ngModel)]="newQuestion.title" name="title">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" placeholder="question text" [(ngModel)]="newQuestion.text" name="text">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" placeholder="question tags" [(ngModel)]="newQuestion.tags" name="text">
+    </mat-form-field>
+
+    <input type="image" [(ngModel)]="newQuestion.title" name="iamge">
+    <button type="submit">Ask</button>
+</form>
+
 <mat-card *ngFor="let question of questions" class="mx-4 my-4">
+    <button *ngIf="question.authorId === userId " type="submit" (click)="deleteQuestion(question)">Delete</button>
     <div class="score">
       <button mat-icon-button (click)="upvotePost(question)">
         +
@@ -13,20 +30,24 @@
       </button>
     </div>
     <div class="wrapper"> 
-        <mat-card-title class="question-card-title">{{ question.title }}</mat-card-title>
+        <mat-card-title class="question-card-title"><a href="/question/{{question.id}}">{{ question.title }}</a></mat-card-title>
         <mat-card-subtitle class="question-card-subtitle">
             <div *ngFor="let tag of question.tags; let last = last" class="tag">
                 <button (click)="getQuestionsByTags(tag)">{{ tag }}</button>
             </div>
+
+                <small><a href="/user/{{question.authorId}}">{{ question.author }}</a></small>
         </mat-card-subtitle>
         <mat-card-content class="question-card-content">{{ question.text }}</mat-card-content>
         <div class="question-footer">
         </div>
         <div *ngFor="let answer of question.answers" class="answer">
+            <button *ngIf="answer.authorId === userId " type="submit" (click)="deleteQuestion(answer)">Delete</button>
             <p>{{ answer.text }}</p>
             <div class="answer-footer">
+
                 <small>Answered on: {{ answer.date }}</small>
-                <small><a href="/user/{{answer.author}}">{{ answer.author }}</a></small>
+                <small><a href="/user/{{answer.authorId}}">{{ answer.author }}</a></small>
                 <div class="score">
                     <button mat-icon-button (click)="upvotePost(answer)">
                         <div>+</div>
@@ -40,3 +61,4 @@
         </div>
     </div>
 </mat-card>
+</div>

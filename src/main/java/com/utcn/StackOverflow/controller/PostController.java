@@ -1,6 +1,7 @@
 package com.utcn.StackOverflow.controller;
 
 import com.utcn.StackOverflow.DTOs.post.*;
+import com.utcn.StackOverflow.DTOs.users.LoginDTO;
 import com.utcn.StackOverflow.entity.Question;
 import com.utcn.StackOverflow.service.PostService;
 import com.utcn.StackOverflow.service.UserService;
@@ -89,4 +90,11 @@ public class PostController {
     public String vote(@RequestBody VoteDTO voteDTO) {
         return "{\"status\":" + postService.votePost(voteDTO)+ "}";
     }
+
+    @ResponseBody
+    @GetMapping("/getPost")
+    public String getById(@RequestParam Long id) {
+        return postService.getById(id).get().toString();
+    }
+
 }

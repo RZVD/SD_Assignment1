@@ -15,7 +15,7 @@ public class Moderator extends UserRole {
 
     @Override
     public String toString() {
-        return "MODERATOR";
+        return "\"MODERATOR\"";
     }
 
 }

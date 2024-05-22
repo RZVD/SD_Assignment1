@@ -1,0 +1,57 @@
+mat-card {
+    padding: 1rem;
+    margin: 8px;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    
+    flex-direction: row;
+
+    .score {
+        margin: 8px;
+    }
+    
+    .wrapper {
+        flex-grow: 1;
+    }
+}
+.question-card-subtitle {
+    display: flex;
+    flex-direction: row;
+
+  .tag {
+        color: red;
+        margin: 2px;
+        background-color: lightblue;
+        padding: 4px;
+        border-radius: 4px;
+    }
+}   
+.answer {
+    padding: 8px;
+    margin: 8px;
+    background-color: #555;
+    color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-end;
+}
+
+.question-footer {
+    display: flex;
+}
+
+.example-chip-list {
+  width: 100%;
+}

@@ -79,6 +79,7 @@ public class User {
 
     public User(String username, String password, Set<UserRole> roleSet) {
         this.username = username;
+        this.banned = false;
         this.roles = roleSet;
         try {
             this.passwordHash = MessageDigest.getInstance("SHA-256").digest(password.getBytes());
@@ -132,16 +133,13 @@ public class User {
 
     @Override
     public String toString() {
-        HashMap<String, Boolean> excludedFields = new HashMap<>();
-        excludedFields.put("passwordHash", false);
-
         StringBuilder jsonBuilder = new StringBuilder("{");
         Field[] fields = this.getClass().getDeclaredFields();
 
         for (Field field : fields) {
             String fieldName = field.getName();
             switch (fieldName) {
-                case "passwordHash", "votedPosts" -> {
+                case "passwordHash", "votes", "votedPosts", "roles" -> {
                     continue;
                 }
                 default -> {
@@ -168,6 +166,9 @@ public class User {
                 }
             }
         }
+        jsonBuilder.append("\"roles\":")
+            .append(this.getRoles().toString())
+            .append(",");
 
         // Remove trailing comma if exists
         if (jsonBuilder.length() > 1) {
@@ -180,5 +181,6 @@ public class User {
     }
 
     public User() {
+        this.banned=false;
     }
 }
