@@ -22,7 +22,6 @@ public abstract class Post {
         this.score = 0L;
     }
 
-
     public Set<Vote> getVotes() {
         return votes;
     }
@@ -97,6 +96,14 @@ public abstract class Post {
 
     public Integer addVote(Vote vote) {
         this.score += vote.getVoteWeight();
+        int voteWeight = vote.getVoteWeight();
+        if(this instanceof Question) {
+            float offset = voteWeight > 0 ? 2.5f : -1.5f;
+            this.getAuthor().updateScore(offset);
+        } else {
+            float offset = voteWeight > 0 ? 5.0f : -2.5f;
+            this.getAuthor().updateScore(5.0f);
+        }
         votes.add(vote);
         return vote.getVoteWeight();
     }

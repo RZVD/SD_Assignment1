@@ -45,6 +45,7 @@ export class LoginComponent {
         .then(data => {
             localStorage.setItem("userId", data.userId)
             localStorage.setItem("user", JSON.stringify(data))
+            console.log(data)
             window.location.replace("/questions")
         }).catch(error => {
             console.error("Couldn't fetch data:", error);

@@ -22,7 +22,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/users")
 public class UserController {
     @Autowired
@@ -93,8 +93,8 @@ public class UserController {
         } catch (NoSuchAlgorithmException ignored) {
         }
         if(!Arrays.equals(maybeUser.get().getPasswordHash(), providedPasswordHash)) {
-            return new ResponseEntity("{\"status\":falsee}", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity("{}", HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.ok("{\"userId\":" + maybeUser.get().getUserId() + "}");
+        return ResponseEntity.ok( maybeUser.get().toString() );
     }
 }

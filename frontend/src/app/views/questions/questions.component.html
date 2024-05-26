@@ -1,67 +1,81 @@
-<div *ngIf="this.userId != undefined && this.userId != null && !this.user.banned; else banned">
-<mat-form-field>
-    <input matInput type="text" placeholder="Search" (keydown)="searchQuestions($event)">
-</mat-form-field>
-
-<form (ngSubmit)="addQuestion()">
+<div *ngIf="user.banned == 'false'; else banned">
     <mat-form-field>
-        <input matInput type="text" placeholder="question title" [(ngModel)]="newQuestion.title" name="title">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput type="text" placeholder="question text" [(ngModel)]="newQuestion.text" name="text">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput type="text" placeholder="question tags" [(ngModel)]="newQuestion.tags" name="text">
+        <input matInput type="text" placeholder="Search" (keydown)="searchQuestions($event)">
     </mat-form-field>
 
-    <input type="image" [(ngModel)]="newQuestion.title" name="iamge">
-    <button type="submit">Ask</button>
-</form>
+    <form (ngSubmit)="addQuestion()">
+        <mat-form-field>
+            <input matInput type="text" placeholder="question title" [(ngModel)]="newQuestion.title" name="title">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="question text" [(ngModel)]="newQuestion.text" name="text">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" placeholder="question tags" [(ngModel)]="newQuestion.tags" name="tags">
+        </mat-form-field>
+        <button type="submit">Ask</button>
+    </form>
 
-<mat-card *ngFor="let question of questions" class="mx-4 my-4">
-    <button *ngIf="question.authorId === userId || admin" type="submit" (click)="deleteQuestion(question)">Delete</button>
-    <div class="score">
-      <button mat-icon-button (click)="upvotePost(question)">
-        +
-      </button>
-      <span>{{ question.score }}</span>
-      <button mat-icon-button (click)="downvotePost(question)">
-        <div>-</div>
-      </button>
-    </div>
-    <div class="wrapper"> 
-        <mat-card-title class="question-card-title"><a href="/question/{{question.id}}">{{ question.title }}</a></mat-card-title>
-        <mat-card-subtitle class="question-card-subtitle">
-            <div *ngFor="let tag of question.tags; let last = last" class="tag">
-                <button (click)="getQuestionsByTags(tag)">{{ tag }}</button>
-            </div>
-                <small><a href="/user/{{question.authorId}}">{{ question.author }}</a></small>
-        </mat-card-subtitle>
-        <mat-card-content class="question-card-content">{{ question.text }}</mat-card-content>
-        <div class="question-footer">
+    <mat-card *ngFor="let question of questions" class="mx-4 my-4">
+        <button *ngIf="question.authorId === userId || admin" type="submit" (click)="deleteQuestion(question)">Delete</button>
+        <button *ngIf="question.authorId === userId || admin" type="submit" (click)="editQuestion(question)">Edit</button>
+
+        <div *ngIf="editedQuestion && editedQuestion.id === question.id; else questionView">
+            <mat-form-field>
+                <input matInput type="text" [(ngModel)]="editedQuestion.title" placeholder="Edit title">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" [(ngModel)]="editedQuestion.text" placeholder="Edit text">
+            </mat-form-field>
+            <button (click)="saveQuestion()">Save</button>
+            <button (click)="cancelEditQuestion()">Cancel</button>
         </div>
-        <div *ngFor="let answer of question.answers" class="answer">
-            <button *ngIf="answer.authorId === userId || admin" type="submit" (click)="deleteQuestion(answer)">Delete</button>
-            <p>{{ answer.text }}</p>
-            <div class="answer-footer">
 
-                <small>Answered on: {{ answer.date }}</small>
-                <small><a href="/user/{{answer.authorId}}">{{ answer.author }}</a></small>
-                <div class="score">
-                    <button mat-icon-button (click)="upvotePost(answer)">
-                        <div>+</div>
-                    </button>
-                    <span>{{ answer.score }}</span>
-                    <button mat-icon-button (click)="downvotePost(answer)">
-                        <div>-</div>
-                    </button>
+        <ng-template #questionView>
+            <div class="score">
+                <button mat-icon-button (click)="upvotePost(question)">+</button>
+                <span>{{ question.score }}</span>
+                <button mat-icon-button (click)="downvotePost(question)">-</button>
+            </div>
+            <div class="wrapper">
+                <mat-card-title class="question-card-title"><a [routerLink]="['/question', question.id]">{{ question.title }}</a></mat-card-title>
+                <mat-card-subtitle class="question-card-subtitle">
+                    <div *ngFor="let tag of question.tags; let last = last" class="tag">
+                        <button (click)="getQuestionsByTags(tag)">{{ tag }}</button>
+                    </div>
+                    <small><a [routerLink]="['/user', question.authorId]">{{ question.author }}</a></small>
+                </mat-card-subtitle>
+                <mat-card-content class="question-card-content">{{ question.text }}</mat-card-content>
+                <div class="question-footer"></div>
+                <div *ngFor="let answer of question.answers" class="answer">
+                    <button *ngIf="answer.authorId === userId || admin" type="submit" (click)="deleteQuestion(answer)">Delete</button>
+                    <button *ngIf="answer.authorId === userId || admin" type="submit" (click)="editAnswer(answer)">Edit</button>
+
+                    <div *ngIf="editedAnswer && editedAnswer.id === answer.id; else answerView">
+                        <mat-form-field>
+                            <input matInput type="text" [(ngModel)]="editedAnswer.text" placeholder="Edit answer">
+                        </mat-form-field>
+                        <button (click)="saveAnswer()">Save</button>
+                        <button (click)="cancelEditAnswer()">Cancel</button>
+                    </div>
+
+                    <ng-template #answerView>
+                        <p>{{ answer.text }}</p>
+                        <div class="answer-footer">
+                            <small>Answered on: {{ answer.date }}</small>
+                            <small><a [routerLink]="['/user', answer.authorId]">{{ answer.author }}</a></small>
+                            <div class="score">
+                                <button mat-icon-button (click)="upvotePost(answer)">+</button>
+                                <span>{{ answer.score }}</span>
+                                <button mat-icon-button (click)="downvotePost(answer)">-</button>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
-        </div>
-    </div>
-</mat-card>
+        </ng-template>
+    </mat-card>
 </div>
-
 
 <ng-template #banned>
     <p>You are banned</p>

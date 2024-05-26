@@ -61,6 +61,7 @@ public class User {
         this.username = username;
     }
 
+
     public byte[] getPasswordHash() {
         return passwordHash;
     }

@@ -40,9 +40,9 @@ public class UserService {
     }
 
 
-    private String TWILIO_AUTH = System.getenv("TWILIO_AUTH");
-    private String TWILIO_SID  = System.getenv("TWILIO_SID");
-    private String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
+    private final String TWILIO_AUTH = System.getenv("TWILIO_AUTH");
+    private final String TWILIO_SID  = System.getenv("TWILIO_SID");
+    private final String TWILIO_PHONE_NUMBER = System.getenv("TWILIO_PHONE_NUMBER");
 
 
 
@@ -166,10 +166,15 @@ public class UserService {
         if ( banningUser.isBanned() || banningUser.getRoles().stream().noneMatch(role -> role instanceof Moderator)) {
             return false;
         }
+        boolean wasBanned = bannedUser.isBanned();
 
         bannedUser.ban();
+        if(wasBanned != banningUser.isBanned()) {
+            userRepository.save(bannedUser);
 
-        notifyUser(bannedUser);
+            System.out.println("Sent sms");
+//            notifyUser(bannedUser);
+        }
         return true;
     }
 

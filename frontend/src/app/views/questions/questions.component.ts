@@ -9,6 +9,7 @@ import { publishFacade } from '@angular/compiler';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -18,11 +19,13 @@ export type Question = {
     userId: string,
     tags: string,
     picturePath: string
+    editMode?: boolean
 }
+
 @Component({
     selector: 'app-questions',
     standalone: true,
-    imports: [MatCardModule, NgFor,NgIf, MatInputModule, FormsModule, MatFormFieldModule, MatDialogTitle, MatDialogActions, MatDialogContent,],
+    imports: [MatCardModule, NgFor,NgIf, MatInputModule, FormsModule, MatFormFieldModule, MatDialogTitle, MatDialogActions, MatDialogContent, RouterLink],
     templateUrl: './questions.component.html',
     styleUrl: './questions.component.scss'
 })
@@ -30,19 +33,12 @@ export type Question = {
 export class QuestionsComponent {
     private baseUrl: string = "http://localhost:8080/posts";
     private selectedTags: string[] = [];
-    public userId: string | null | undefined;
-    public user = {
-       banned : false,
-       phoneNumber : "",
-       roles : [
-            ""
-       ],
-       score : 0,
-       userId : 0,
-       username : ""
-    }; 
+    public userId = localStorage.getItem("userId")
+    public user = JSON.parse(localStorage.getItem("user")!)
     public admin: any;
     questions: any[] = []
+    editedQuestion: any = null;
+    editedAnswer: any = null;
     
     newQuestion: Question = { title: '', text: '', userId: '', tags: "", picturePath: ""};
     constructor(
@@ -50,8 +46,7 @@ export class QuestionsComponent {
     ){}
 
     ngOnInit(): void {
-        this.userId=localStorage.getItem("userId")
-        this.user = JSON.parse(localStorage.getItem("user")!)
+        console.log(this.user)
         this.admin = this.user.roles.includes("MODERATOR");
         if (!this.userId) {
           this.router.navigate(['/login']);
@@ -112,6 +107,10 @@ export class QuestionsComponent {
             return response.json();
         })
         .then(data => {
+            for (let index = 0; index < (data as Question[]).length; index++) {
+                const element = data[index].editMode = false;
+                
+            }
             this.questions = data
         }).catch(error => {
             console.error("Couldn't fetch data:", error);
@@ -180,7 +179,6 @@ export class QuestionsComponent {
         if(post.author == 1) { // change to localstorage
             
         }
-        let response;
         fetch(`${this.baseUrl}/vote`, {
             method: "POST",
             headers: {
@@ -240,8 +238,31 @@ export class QuestionsComponent {
         .catch(error => {
             console.error("Couldn't fetch data:", error);
         });
-        
 
+    }
+    saveAnswer() {
+        fetch(`${this.baseUrl}/update`, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...this.editedAnswer,
+                postId: this.editedAnswer.id,
+                userId: this.userId,
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            this.fetchQuestions();
+            this.editedAnswer = null;
+        })
+        .catch(error => {
+            console.error("Couldn't fetch data:", error);
+        });
     }
 
     deleteQuestion(question: any): void {
@@ -265,5 +286,47 @@ export class QuestionsComponent {
             console.error("Couldn't fetch data:", error);
         });
         
+    }
+    editQuestion(question: any) {
+        this.editedQuestion = {...question};
+        console.log(this.editedQuestion)
+    }
+
+    saveQuestion() {
+        console.log(this.editedQuestion)
+        fetch(`${this.baseUrl}/update`, {
+            method: "PUT",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ...this.editedQuestion,
+                postId: this.editedQuestion.id,
+                userId: this.userId,
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network error');
+            }
+            return response.json();
+        })
+        .then(data => {
+            this.fetchQuestions();
+            this.editedQuestion = null;
+        })
+        .catch(error => {
+            console.error("Couldn't fetch data:", error);
+        });
+    }
+
+    cancelEditQuestion() {
+        this.editedQuestion = null;
+    }
+
+    cancelEditAnswer() {
+        this.editedAnswer = null;
+    }
+
+    editAnswer(answer: any) {
+        this.editedAnswer = { ...answer };
     }
 }

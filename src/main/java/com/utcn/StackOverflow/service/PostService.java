@@ -91,7 +91,7 @@ public class PostService {
         if (maybePost.isEmpty() || maybeUser.isEmpty()) return false;
         Post post = maybePost.get();
         User user = maybeUser.get();
-        if(!Objects.equals(post.getAuthor().getUserId(), user.getUserId())) return false;
+        if(user.getRoles().stream().noneMatch(userRole -> userRole instanceof Moderator) && !Objects.equals(post.getAuthor().getUserId(), user.getUserId())) return false;
         post.setBody(updatePostDTO.getText());
         post.setPicturePath(updatePostDTO.getPicturePath());
 
@@ -156,6 +156,7 @@ public class PostService {
         int r = post.addVote(newVote);
 
         user.getVotes().add(newVote);
+        post.addVote(newVote);
         this.postRepository.save(post);
         this.userRepository.save(user);
         this.voteRepository.save(newVote);
