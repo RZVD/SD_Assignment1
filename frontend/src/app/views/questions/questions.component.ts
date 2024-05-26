@@ -31,6 +31,17 @@ export class QuestionsComponent {
     private baseUrl: string = "http://localhost:8080/posts";
     private selectedTags: string[] = [];
     public userId: string | null | undefined;
+    public user = {
+       banned : false,
+       phoneNumber : "",
+       roles : [
+            ""
+       ],
+       score : 0,
+       userId : 0,
+       username : ""
+    }; 
+    public admin: any;
     questions: any[] = []
     
     newQuestion: Question = { title: '', text: '', userId: '', tags: "", picturePath: ""};
@@ -40,8 +51,10 @@ export class QuestionsComponent {
 
     ngOnInit(): void {
         this.userId=localStorage.getItem("userId")
+        this.user = JSON.parse(localStorage.getItem("user")!)
+        this.admin = this.user.roles.includes("MODERATOR");
         if (!this.userId) {
-          this.router.navigate(['/login']); // Redirect to login page if not logged in
+          this.router.navigate(['/login']);
         }
         this.fetchQuestions();
     }

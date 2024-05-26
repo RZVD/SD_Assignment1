@@ -24,6 +24,7 @@ import { publishFacade } from '@angular/compiler';
 export class LoginComponent {
     private baseUrl: string = "http://localhost:8080/users/login"
     public loginData = {username: "", password: ""};
+
     login(){
         console.log(JSON.stringify(this.loginData))
         fetch(`${this.baseUrl}`, {
@@ -42,8 +43,9 @@ export class LoginComponent {
             return response.json();
         })
         .then(data => {
-                localStorage.setItem("userId", data.userId)
-                window.location.replace("/questions")
+            localStorage.setItem("userId", data.userId)
+            localStorage.setItem("user", JSON.stringify(data))
+            window.location.replace("/questions")
         }).catch(error => {
             console.error("Couldn't fetch data:", error);
         });

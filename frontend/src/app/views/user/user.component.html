@@ -2,6 +2,7 @@
     <img src="assets/default.jpg" width="256" height="256" >
     <mat-card>
         <mat-card-title> {{ user.username }} </mat-card-title>
+    <div> score: {{user.score}} </div>
     <mat-card-subtitle> 
         <div *ngFor="let role of user.roles" class="role">
             {{ role }}
@@ -9,6 +10,7 @@
     </mat-card-subtitle>
 </mat-card>
 <button (click)="deleteUser()">Delete</button>
+<button *ngIf="admin" (click)="banUser()">Ban</button>
 </div>
 
 <ng-template #noUser>
