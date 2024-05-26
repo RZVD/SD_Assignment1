@@ -43,6 +43,10 @@
     <mat-form-field>
         <input matInput type="text" placeholder="answer text" [(ngModel)]="newAnswer.text" name="text">
     </mat-form-field>
+
+    <input type="file" (change)="onFileSelected($event)" name="image">
     <button type="submit">Ask</button>
 </form>
 </mat-card>
+
+<img *ngIf="question.image" [src]="question.image">

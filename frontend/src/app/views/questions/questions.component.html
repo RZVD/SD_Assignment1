@@ -13,13 +13,14 @@
         <mat-form-field>
             <input matInput type="text" placeholder="question tags" [(ngModel)]="newQuestion.tags" name="tags">
         </mat-form-field>
+
+        <input type="file" (change)="onFileSelected($event)" name="image">
         <button type="submit">Ask</button>
     </form>
 
     <mat-card *ngFor="let question of questions" class="mx-4 my-4">
         <button *ngIf="question.authorId === userId || admin" type="submit" (click)="deleteQuestion(question)">Delete</button>
         <button *ngIf="question.authorId === userId || admin" type="submit" (click)="editQuestion(question)">Edit</button>
-
         <div *ngIf="editedQuestion && editedQuestion.id === question.id; else questionView">
             <mat-form-field>
                 <input matInput type="text" [(ngModel)]="editedQuestion.title" placeholder="Edit title">
@@ -27,6 +28,7 @@
             <mat-form-field>
                 <input matInput type="text" [(ngModel)]="editedQuestion.text" placeholder="Edit text">
             </mat-form-field>
+
             <button (click)="saveQuestion()">Save</button>
             <button (click)="cancelEditQuestion()">Cancel</button>
         </div>

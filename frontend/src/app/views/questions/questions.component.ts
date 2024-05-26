@@ -18,8 +18,9 @@ export type Question = {
     text: string,
     userId: string,
     tags: string,
-    picturePath: string
+    picturePath?: File
     editMode?: boolean
+    image?: string,
 }
 
 @Component({
@@ -40,7 +41,7 @@ export class QuestionsComponent {
     editedQuestion: any = null;
     editedAnswer: any = null;
     
-    newQuestion: Question = { title: '', text: '', userId: '', tags: "", picturePath: ""};
+    newQuestion: Question = { title: '', text: '', userId: '', tags: '' } ;
     constructor(
         private router: Router
     ){}
@@ -70,10 +71,22 @@ export class QuestionsComponent {
             return response.json();
         })
         .then(data => {
-            this.questions = data.questions;
+            this.questions = data.questions.map((question: any) => ({
+                ...question,
+                image: this.arrayBufferToBase64(question.image)
+            }));
         }).catch(error => {
             console.error("Couldn't fetch data:", error);
         });
+    }
+
+    arrayBufferToBase64(buffer: ArrayBuffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return 'data:image/jpeg;base64,' + btoa(binary);
     }
     
     getQuestionsByTags(tag: string) {
@@ -215,7 +228,7 @@ export class QuestionsComponent {
                 text: this.newQuestion.text,
                 userId: localStorage.getItem("userId"),
                 tags: this.newQuestion.tags.split(" "),
-                picturePath: ""
+                picturePath: this.newQuestion.picturePath
             })
         })
         .then(response => {
@@ -225,14 +238,15 @@ export class QuestionsComponent {
             return response.json();
         })
         .then(data => {
+            console.log(data)
             this.questions.push(data);
             this.newQuestion = { 
                 title: '',
                 text: '',
                 userId: localStorage.getItem("userId") as string,
                 tags: "",
-                picturePath: '',
             };
+            this.newQuestion.picturePath
             this.fetchQuestions();
         })
         .catch(error => {
@@ -328,5 +342,41 @@ export class QuestionsComponent {
 
     editAnswer(answer: any) {
         this.editedAnswer = { ...answer };
+    }
+    
+
+    dataURLtoBlob(dataURL: string | ArrayBuffer | null): Blob {
+        if (typeof dataURL === 'string') {
+            const byteString = atob(dataURL.split(',')[1]);
+            const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        }
+        throw new Error('Invalid dataURL format');
+    }
+
+    readImage(file: File) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            // Set the data URL as the picturePath
+            this.newQuestion.picturePath = e.target.result;
+        };
+        reader.readAsDataURL(file); // Read the file as a data URL
+    }
+
+    onFileSelected(event: any) {
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                const base64String = e.target.result.split(',')[1]; // Strip the data URL prefix
+                this.newQuestion.picturePath = base64String;
+            };
+            reader.readAsDataURL(file);
+        }
     }
 }

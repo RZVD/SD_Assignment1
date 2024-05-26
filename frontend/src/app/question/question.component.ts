@@ -8,7 +8,6 @@ import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { publishFacade } from '@angular/compiler';
 
-type Question = {}
 
 @Component({
   selector: 'app-question',
@@ -44,10 +43,36 @@ export class QuestionComponent implements OnInit {
             return response.json();
         })
         .then(data => {
-            this.question = data
+            this.question = {
+                ...data,
+                image: this.arrayBufferToBase64(data.image)
+            }
+
         }).catch(error => {
             console.error("Couldn't fetch data:", error);
         });
+    }
+    
+    
+    onFileSelected(event: any) {
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                const base64String = e.target.result.split(',')[1]; // Strip the data URL prefix
+                this.question.picturePath = base64String;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    arrayBufferToBase64(buffer: ArrayBuffer) {
+        let binary = '';
+        const bytes = new Uint8Array(buffer);
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return 'data:image/jpeg;base64,' + btoa(binary);
     }
 
     constructor(private route: ActivatedRoute) { }
@@ -57,7 +82,7 @@ export class QuestionComponent implements OnInit {
         this.getQuestion();
     }
     upvotePost(post: any) {
-        if(post.author == localStorage.getItem("userId")) { // change to localstorage
+        if(post.author == localStorage.getItem("userId")) { 
             fetch(`${this.baseUrl}/vote`, {
                 method: "POST",
                 headers: {
