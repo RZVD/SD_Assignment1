@@ -9,6 +9,7 @@ import com.utcn.StackOverflow.repository.PostRepository;
 import com.utcn.StackOverflow.repository.TagRepository;
 import com.utcn.StackOverflow.repository.UserRepository;
 import com.utcn.StackOverflow.repository.VoteRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +31,11 @@ public class PostService {
     public List<Post> getPosts() {
         return (List<Post>) this.postRepository.findAll();
     }
-
+    @Transactional
     public Post insertPost(Post post) {
         if (post instanceof Question question) {
             System.out.println(question.getAnswers());
+            System.out.println(question.getTags());
             tagRepository.saveAll(question.getTags());
             postRepository.saveAll(question.getAnswers());
         }
@@ -54,7 +56,6 @@ public class PostService {
             return false;
         }
     }
-
     public Boolean answerQuestion(CreateAnswerDTO createAnswerDTO){
         Optional<Post> maybePost = this.getById(createAnswerDTO.getQuestionId());
         Optional<User> maybeUser = userRepository.findById(createAnswerDTO.getUserId());
@@ -97,7 +98,9 @@ public class PostService {
 
         if(post instanceof Question question) {
             String title = updatePostDTO.getTitle();
+            var tags = question.getTags();
             question.setTitle(title);
+            question.setTags(tags);
         }
 
         this.insertPost(post);

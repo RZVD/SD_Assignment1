@@ -173,7 +173,7 @@ public class UserService {
             userRepository.save(bannedUser);
 
             System.out.println("Sent sms");
-//            notifyUser(bannedUser);
+            notifyUser(bannedUser);
         }
         return true;
     }

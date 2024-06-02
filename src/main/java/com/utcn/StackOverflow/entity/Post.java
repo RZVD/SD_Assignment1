@@ -2,6 +2,7 @@ package com.utcn.StackOverflow.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Blob;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public abstract class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    public Post(User author, String body, String picturePath) {
+    public Post(User author, String body, byte[] picturePath) {
         this.author = author;
         this.body = body;
         this.picturePath = picturePath;
@@ -61,11 +62,11 @@ public abstract class Post {
         this.score = score;
     }
 
-    public String getPicturePath() {
+    public byte[] getPicturePath() {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
+    public void setPicturePath(byte[] picturePath) {
         this.picturePath = picturePath;
     }
 
@@ -96,6 +97,7 @@ public abstract class Post {
 
     public Integer addVote(Vote vote) {
         this.score += vote.getVoteWeight();
+        System.out.println(vote.getVoteWeight());
         int voteWeight = vote.getVoteWeight();
         if(this instanceof Question) {
             float offset = voteWeight > 0 ? 2.5f : -1.5f;
@@ -127,7 +129,8 @@ public abstract class Post {
     }
 
     @Column(name = "picture_path")
-    private String picturePath;
+    @Lob
+    private byte[] picturePath;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;

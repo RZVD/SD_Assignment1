@@ -4,10 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name = "answers")
 public class Answer extends Post{
-    public Answer(User author, String body, String picture_path, Question question) {
+    public Answer(User author, String body, byte[] picture_path, Question question) {
         super(author, body, picture_path);
         this.question = question;
     }

@@ -1,6 +1,7 @@
 package com.utcn.StackOverflow.entity;
 
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.util.*;
 
@@ -14,14 +15,14 @@ public class Question extends Post{
     @JoinColumn(name = "question_post_id")
     private List<Answer> answers = new ArrayList<>();
 
-    public Question(User author, String title, String body, String picture_path, Set<Tag> tags) {
-        super(author, body, picture_path);
+    public Question(User author, String title, String body, byte[] picturePath, Set<Tag> tags) {
+        super(author, body, picturePath);
         this.title = title;
         this.tags = tags;
     }
 
-    public Question(User author, String title, String body, String picture_path) {
-        super(author, body, picture_path);
+    public Question(User author, String title, String body, byte[] picturePath) {
+        super(author, body, picturePath);
         this.title = title;
         this.answers = new ArrayList<Answer>();
         this.tags = new HashSet<>();
@@ -35,6 +36,7 @@ public class Question extends Post{
         super();
     }
 
+    @Setter
     @ManyToMany
     @JoinTable(
         name = "question_tags",
@@ -59,11 +61,13 @@ public class Question extends Post{
             "\"text\":"   + "\"" + this.getBody() + "\"," +
             "\"answers\":" + this.answers.stream().sorted(Comparator.comparingLong(Answer::getScore).reversed()).toList() + ","   +
             "\"date\":\"" + this.getTimestamp().toString() + "\"," +
-            "\"tags\":"   +   this.getTags().toString()
+            "\"image\":" + Arrays.toString(this.getPicturePath()) + "," +
+            "\"tags\":"   +  this.getTags()
         + "}";
     }
 
     public List<Answer> getAnswers() {
         return answers;
     }
+
 }

@@ -1,11 +1,12 @@
 package com.utcn.StackOverflow.DTOs.post;
 
+
 public class UpdatePostDTO {
     private Long userId;
     private String text;
     private String title;
-    private String picturePath;
-
+    private byte[] picturePath;
+    
     public Long getPostId() {
         return postId;
     }
@@ -39,11 +40,11 @@ public class UpdatePostDTO {
         this.title = title;
     }
 
-    public String getPicturePath() {
+    public byte[] getPicturePath() {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
+    public void setPicturePath(byte[] picturePath) {
         this.picturePath = picturePath;
     }
 }

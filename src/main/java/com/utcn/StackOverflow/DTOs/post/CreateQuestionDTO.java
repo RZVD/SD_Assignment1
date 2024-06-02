@@ -6,7 +6,7 @@ public class CreateQuestionDTO {
     private String title;
     private String text;
 
-    private String picturePath;
+    private byte[] picturePath;
     public Long getUserId() {
         return userId;
     }
@@ -32,11 +32,11 @@ public class CreateQuestionDTO {
         this.text = text;
     }
 
-    public String getPicturePath() {
+    public byte[] getPicturePath() {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
+    public void setPicturePath(byte[] picturePath) {
         this.picturePath = picturePath;
     }
 

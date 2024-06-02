@@ -1,5 +1,6 @@
 package com.utcn.StackOverflow.DTOs.post;
 
+
 public class CreateAnswerDTO {
     private Long userId;
     private String text;
@@ -30,13 +31,13 @@ public class CreateAnswerDTO {
         this.text = text;
     }
 
-    public String getPicturePath() {
+    public byte[] getPicturePath() {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
+    public void setPicturePath(byte[] picturePath) {
         this.picturePath = picturePath;
     }
 
-    private String picturePath;
+    private byte[] picturePath;
 }
