@@ -1,0 +1,42 @@
+<mxfile host="65bd71144e">
+    <diagram id="6zKdtL3yTD2TEsOtZOtJ" name="Page-1">
+        <mxGraphModel dx="749" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="8" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Frontend server" style="verticalAlign=top;align=left;shape=cube;size=10;direction=south;fontStyle=0;html=1;boundedLbl=1;spacingLeft=5;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="130" width="130" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" style="edgeStyle=none;html=1;" edge="1" parent="1" source="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="485" y="360" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="Backend server" style="verticalAlign=top;align=left;shape=cube;size=10;direction=south;fontStyle=0;html=1;boundedLbl=1;spacingLeft=5;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="130" width="130" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Database Server&lt;br&gt;" style="verticalAlign=top;align=left;shape=cube;size=10;direction=south;fontStyle=0;html=1;boundedLbl=1;spacingLeft=5;" vertex="1" parent="1">
+                    <mxGeometry x="420" y="370" width="130" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Angular app" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+                    <mxGeometry x="141" y="200" width="75" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="SpringBoot app" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+                    <mxGeometry x="444.5" y="200" width="75" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="PostgreSQL&lt;br&gt;Server" style="whiteSpace=wrap;html=1;shape=mxgraph.basic.document" vertex="1" parent="1">
+                    <mxGeometry x="444.5" y="440" width="75" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="TCP/IP" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="490" y="300" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="TCP/IP" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="160" width="60" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

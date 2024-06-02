@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a56bc3d5-1812-4d65-9615-70b6fd01281c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/CreateAnswerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/CreateAnswerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/CreateQuestionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/CreateQuestionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/UpdatePostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/DTOs/post/UpdatePostDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Answer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/entity/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/service/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/service/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utcn/StackOverflow/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2e5WLaNWW1Llej7VRG3WGo1HsDY" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.StackOverflowApplication.executor&quot;: &quot;Run&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL-Insert-Multirow.sql.groovy&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/razvan/repos/SD/StackOverflow&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.utcn.StackOverflow.controller" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="StackOverflowApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="TWILIO_SID" value="AC760586470ab07473ec07c15824e2309c" />
+        <env name="TWILIO_AUTH" value="94a9b2f933ab17a6bc77272bc36f4a47" />
+        <env name="TWILIO_PHONE_NUMBER" value="+13204296766" />
+      </envs>
+      <module name="StackOverflow" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.utcn.StackOverflow.StackOverflowApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SQLScriptSettings">
+    <option name="matrix">
+      <map>
+        <entry key="POSTGRES.CreateComplete" value="CreateOrReplace=1, CreateIfNotExists=1, UseCompactDef=1" />
+      </map>
+    </option>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a56bc3d5-1812-4d65-9615-70b6fd01281c" name="Changes" comment="" />
+      <created>1711194865058</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711194865058</updated>
+      <workItem from="1711194867693" duration="14798000" />
+      <workItem from="1711219848981" duration="22666000" />
+      <workItem from="1711301746926" duration="7428000" />
+      <workItem from="1711445114318" duration="24222000" />
+      <workItem from="1711551412870" duration="4176000" />
+      <workItem from="1712153190273" duration="1211000" />
+      <workItem from="1712758417484" duration="1280000" />
+      <workItem from="1713246655130" duration="10000" />
+      <workItem from="1713247121733" duration="909000" />
+      <workItem from="1713333522464" duration="5000" />
+      <workItem from="1716031763521" duration="23566000" />
+      <workItem from="1716059941746" duration="1362000" />
+      <workItem from="1716130887142" duration="8765000" />
+      <workItem from="1716197429944" duration="4798000" />
+      <workItem from="1716221422905" duration="4015000" />
+      <workItem from="1716268715110" duration="14307000" />
+      <workItem from="1716384167937" duration="1030000" />
+      <workItem from="1716703066912" duration="13006000" />
+      <workItem from="1716738918631" duration="1653000" />
+      <workItem from="1716745652450" duration="4324000" />
+      <workItem from="1716800651599" duration="98000" />
+      <workItem from="1716805297939" duration="133000" />
+      <workItem from="1716987663037" duration="319000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
